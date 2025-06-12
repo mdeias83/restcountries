@@ -1,6 +1,8 @@
 package com.example.restcountries.ui.view.countryList
 
 import Country
+import Currency
+import Name
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,30 +21,54 @@ import com.example.restcountries.ui.viewmodel.CountryListScreenViewModel
 
 @Composable
 fun CountryListScreen(
-    vm: CountryListScreenViewModel = viewModel(),
-    modifier: Modifier = Modifier)
-    {
-    Column (
-        modifier=Modifier.fillMaxSize().padding(16.dp)
-    ){
+    modifier: Modifier = Modifier,
+    vm: CountryListScreenViewModel = viewModel()
+) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp)
+    ) {
         Text(
-            text = "Lista de Paises",
+            text = "Lista de Países",
             style = MaterialTheme.typography.titleLarge,
             modifier = modifier
         )
         Spacer(modifier = Modifier.height(12.dp))
-        //Lista
         CountryUIList(vm.uiState.countryList, Modifier.fillMaxSize())
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
 fun CountryPreview() {
     RestCountriesTheme {
-        CountryListScreen(emptyList())
+        CountryListScreenPreview()
     }
 }
 
-
+// Esto es solo para el preview:
+@Composable
+fun CountryListScreenPreview() {
+    // Armá un país fake (para que veas cómo se ve la lista)
+    val paisesDePrueba = listOf(
+        Country(
+            cca3 = "ARG",
+            name = Name(common = "Argentina", official = "República Argentina"),
+            currencies = mapOf("ARS" to Currency(name = "Peso argentino", symbol = "$")),
+            capital = listOf("Buenos Aires"),
+            region = "América del Sur",
+            languages = mapOf("spa" to "Español"),
+            flag = "🇦🇷",
+            population = 45808747
+        )
+    )
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp)
+    ) {
+        Text(
+            text = "Lista de Países",
+            style = MaterialTheme.typography.titleLarge
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        CountryUIList(paisesDePrueba, Modifier.fillMaxSize())
+    }
+}
