@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
                 RestCountriesTheme {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                         CountryListScreen(
-
                             modifier = Modifier.padding(innerPadding)
                         )
                     }

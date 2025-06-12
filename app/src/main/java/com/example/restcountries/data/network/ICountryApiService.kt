@@ -1,8 +1,8 @@
 package com.example.restcountries.data.network
 
+import Country
 import retrofit2.http.GET
 import retrofit2.http.Query
-import com.google.android.ads.mediationtestsuite.dataobjects.Country
 interface CountryApiService {
 
     @GET("independent")

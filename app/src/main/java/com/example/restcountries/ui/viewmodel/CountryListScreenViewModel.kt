@@ -12,6 +12,9 @@ import com.google.gson.Gson
 class CountryListScreenViewModel : ViewModel(){
     var uiState by mutableStateOf(CountryListScreenState())
         private set
+    init {
+        fetchCountries()
+    }
     fun fetchCountries(){
         uiState= uiState.copy(countryList = getCountryList())
     }
