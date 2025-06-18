@@ -8,10 +8,10 @@ interface ICountryAPI {
     @GET("name/{country}")
     suspend fun getCountrySearch(
         @Path("country") search: String,
-        @Query("fields") fields: String = "name,region,capital,flags,population"
+        @Query("fields") fields: String = "name,region,capital,flag,population"
     ): List<Country>
     @GET("all")
     suspend fun getAllCountries(
-        @Query("fields") fields: String = "name,region,flags"
+        @Query("fields") fields: String = "name,region,capital,flag"
     ): List<Country>
 }
