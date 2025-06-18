@@ -1,5 +1,6 @@
 package com.example.restcountries.data
 
+import android.util.Log
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -13,7 +14,9 @@ class CountryApiDataSource : ICountryDataSource {
                         .build()
     val api = retrofit.create(ICountryAPI::class.java)
     override suspend fun getCountryList(): List<Country> {
-        val countries = api.getCountrySearch("")
+        Log.d("RestCountries","CountryApiDataSource.getCountryList")
+        val countries = api.getAllCountries()
+        Log.d("RestCountries","CountryApiDataSource.getCountryList Result: ${countries.size}")
         return countries
         }
 }
