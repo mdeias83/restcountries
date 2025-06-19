@@ -1,7 +1,7 @@
 package com.example.restcountries.data
 
 import android.util.Log
-import com.example.restcountries.data.dto.CountryItemListDTO
+import com.example.restcountries.data.dto.CountryDTO
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 
@@ -9,11 +9,11 @@ class CountryTestDataSource: ICountryDataSource  {
 
 
     //TEST DATA SOURCE
-    override suspend fun getCountryList(search: String) : List<CountryItemListDTO>{
+    override suspend fun getCountryList(search: String) : List<CountryDTO>{
 
         delay(5000)
         val gson = Gson()
-        val countryList = gson.fromJson(json, Array<CountryItemListDTO>::class.java).toList()
+        val countryList = gson.fromJson(json, Array<CountryDTO>::class.java).toList()
         Log.d("GSONDATANAME", countryList[0].name.common)
         return countryList
     }

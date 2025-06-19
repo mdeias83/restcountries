@@ -1,7 +1,10 @@
 package com.example.restcountries.data.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class CountryDTO(
-    val cca3: String,
+    @SerializedName("cca3")
+    val id: String,
     val name: Name,
     val currencies: Map<String, Currency>,
     val capital: List<String>?,

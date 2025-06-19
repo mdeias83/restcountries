@@ -7,11 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.restcountries.data.dto.CountryItemListDTO
+import com.example.restcountries.data.dto.CountryDTO
 import com.example.restcountries.ui.screens.commons.CountryUIItem
 
 @Composable
-fun CountryUIList(countryList: List<CountryItemListDTO>, modifier: Modifier = Modifier) {
+fun CountryUIList(countryList: List<CountryDTO>, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()

@@ -8,10 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.restcountries.data.dto.CountryItemListDTO
+import com.example.restcountries.data.dto.CountryDTO
 
 @Composable
-fun CountryUIItem(country: CountryItemListDTO, modifier: Modifier = Modifier) {
+fun CountryUIItem(country: CountryDTO, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
