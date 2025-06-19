@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import com.example.restcountries.ui.screens.NavigationStack
 import com.example.restcountries.ui.theme.RestCountriesTheme
 import com.example.restcountries.ui.screens.countryList.CountryListScreen
 
@@ -18,9 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             RestCountriesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    CountryListScreen(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    NavigationStack()
                 }
             }
         }
