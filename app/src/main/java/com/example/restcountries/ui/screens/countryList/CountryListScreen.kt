@@ -2,13 +2,18 @@ package com.example.restcountries.ui.screens.countryList
 
 import CountryUIList
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,6 +38,30 @@ fun CountryListScreen(
             modifier = modifier
         )
         Spacer(modifier = Modifier.height(12.dp))
+        Row(
+            modifier= Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        )
+        {
+            TextField(
+                value= vm.uiState.searchQuery,
+                modifier = Modifier.weight(1f),
+                label = {Text("Buscar País: ")},
+                singleLine = true,
+                onValueChange = {vm.searchChange(it)}
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Button(
+                onClick = {
+                    vm.fetchCountries()
+                }
+            ) {
+                Text("Buscar")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         CountryUIList(vm.uiState.countryList, Modifier.fillMaxSize())
     }
 }

@@ -1,22 +1,33 @@
 package com.example.restcountries.data
 
 import android.util.Log
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import java.io.IOException
 
 class CountryApiDataSource : ICountryDataSource {
-    val BASE_URL = "https://restcountries.com/v3.1/"
+    private val TAG = "RestCountries"
 
-    val retrofit = Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build()
-    val api = retrofit.create(ICountryAPI::class.java)
-    override suspend fun getCountryList(): List<Country> {
-        Log.d("RestCountries","CountryApiDataSource.getCountryList")
-        val countries = api.getAllCountries()
-        Log.d("RestCountries","CountryApiDataSource.getCountryList Result: ${countries.size}")
-        return countries
+    override suspend fun getCountryList(search: String): List<Country> {
+        Log.d(TAG, "CountryApiDataSource.getCountryList")
+
+        return try {
+            Log.d(TAG, "CountryApiDataSource.getCountryList $search")
+            val countries = RetrofitInstance.countryApi.getCountrySearch(search)
+
+            Log.d(TAG, "CountryApiDataSource.getCountryList Result: ${countries.size}")
+            return countries
+        } catch (e: HttpException) {
+            Log.e(TAG, "ERROR HTTP, ${e.code()} ${e.message()}")
+            emptyList()
+        } catch (e: IOException) {
+            Log.e(TAG, "ERROR NETWORK, ${e.localizedMessage}")
+            emptyList()
+        } catch (e: Exception) {
+            Log.e(TAG, "ERROR DESCONOCIDO, ${e.localizedMessage}")
+            emptyList()
         }
+    }
 }

@@ -6,7 +6,7 @@ class CountryRepository(
    val countryDataSource: ICountryDataSource = CountryApiDataSource()
     ):  ICountryRepository
 {
-    override suspend fun fetchCountries(): List<Country>{
-        return countryDataSource.getCountryList()
+    override suspend fun fetchCountries(search: String): List<Country>{
+        return countryDataSource.getCountryList(search)
     }
 }

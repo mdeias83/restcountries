@@ -24,7 +24,7 @@ class CountryListScreenViewModel(
     private set
 
     init{
-        fetchCountries()
+        //fetchCountries()
     }
 
 
@@ -35,7 +35,7 @@ class CountryListScreenViewModel(
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try{
-                uiState = uiState.copy(countryList = countryRepository.fetchCountries())
+                uiState = uiState.copy(countryList = countryRepository.fetchCountries(uiState.searchQuery))
 
             }
             catch(e: IOException) {
@@ -43,6 +43,9 @@ class CountryListScreenViewModel(
             }
         }
 
+    }
+    fun searchChange(search: String){
+        uiState=uiState.copy(searchQuery = search, countryList = uiState.countryList)
     }
 }
 
