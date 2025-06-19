@@ -1,5 +1,6 @@
 package com.example.restcountries.data
 
+import com.example.restcountries.data.dto.CountryItemListDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -9,9 +10,9 @@ interface ICountryAPI {
     suspend fun getCountrySearch(
         @Path("country") search: String,
         @Query("fields") fields: String = "name,region,capital,flag,population"
-    ): List<Country>
+    ): List<CountryItemListDTO>
     @GET("all")
     suspend fun getAllCountries(
         @Query("fields") fields: String = "name,region,capital,flag"
-    ): List<Country>
+    ): List<CountryItemListDTO>
 }

@@ -8,10 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.restcountries.data.Country
+import com.example.restcountries.data.dto.CountryItemListDTO
 
 @Composable
-fun CountryUIItem(country: Country, modifier: Modifier = Modifier) {
+fun CountryUIItem(country: CountryItemListDTO, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -38,12 +38,6 @@ fun CountryUIItem(country: Country, modifier: Modifier = Modifier) {
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-
-            // Capital
-            Text(
-                text = "Capital: ${country.capital?.joinToString() ?: "-"}",
-                style = MaterialTheme.typography.bodyMedium
-            )
 
             // Región
             Text(

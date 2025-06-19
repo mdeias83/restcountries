@@ -6,11 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.restcountries.data.Country
 import com.example.restcountries.data.CountryRepository
-import com.example.restcountries.data.CountryTestDataSource
 import com.example.restcountries.domain.ICountryRepository
-import com.google.gson.Gson
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException

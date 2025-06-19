@@ -1,16 +1,14 @@
 package com.example.restcountries.data
 
 import android.util.Log
+import com.example.restcountries.data.dto.CountryItemListDTO
 import retrofit2.HttpException
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.io.IOException
 
 class CountryApiDataSource : ICountryDataSource {
     private val TAG = "RestCountries"
 
-    override suspend fun getCountryList(search: String): List<Country> {
+    override suspend fun getCountryList(search: String): List<CountryItemListDTO> {
         Log.d(TAG, "CountryApiDataSource.getCountryList")
 
         return try {

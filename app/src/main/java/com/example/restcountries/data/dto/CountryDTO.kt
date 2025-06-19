@@ -1,6 +1,6 @@
-package com.example.restcountries.data
+package com.example.restcountries.data.dto
 
-data class Country(
+data class CountryDTO(
     val cca3: String,
     val name: Name,
     val currencies: Map<String, Currency>,
