@@ -11,7 +11,11 @@ import com.example.restcountries.data.dto.CountryDTO
 import com.example.restcountries.ui.screens.commons.CountryUIItem
 
 @Composable
-fun CountryUIList(countryList: List<CountryDTO>, modifier: Modifier = Modifier) {
+fun CountryUIList(
+    countryList: List<CountryDTO>,
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit
+    ) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -26,7 +30,7 @@ fun CountryUIList(countryList: List<CountryDTO>, modifier: Modifier = Modifier) 
                     .fillMaxWidth(0.92f),
                     elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
             ) {
-                CountryUIItem(country)
+                CountryUIItem(country,onClick=onClick)
             }
         }
     }

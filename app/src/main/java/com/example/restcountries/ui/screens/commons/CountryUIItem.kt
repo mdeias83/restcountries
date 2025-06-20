@@ -1,5 +1,6 @@
 package com.example.restcountries.ui.screens.commons
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -11,9 +12,18 @@ import androidx.compose.ui.unit.dp
 import com.example.restcountries.data.dto.CountryDTO
 
 @Composable
-fun CountryUIItem(country: CountryDTO, modifier: Modifier = Modifier) {
+fun CountryUIItem(
+    country: CountryDTO,
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit
+
+    )
+{
     Card(
         modifier = modifier
+            .clickable{
+                onClick(country.cca3)
+            }
             .fillMaxWidth()
             .padding(vertical = 4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)

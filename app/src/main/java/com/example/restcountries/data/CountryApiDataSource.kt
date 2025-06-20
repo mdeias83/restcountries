@@ -28,4 +28,8 @@ class CountryApiDataSource : ICountryDataSource {
             emptyList()
         }
     }
+
+    override suspend fun getCountryById(cca3: String): List<CountryDTO> {
+        return RetrofitInstance.countryApi.getCountry(cca3)
+    }
 }

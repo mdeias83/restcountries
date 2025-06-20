@@ -10,4 +10,10 @@ class CountryRepository(
     override suspend fun fetchCountries(search: String): List<CountryDTO>{
         return countryDataSource.getCountryList(search)
     }
-}
+
+    override suspend fun fetchCountry(cca3: String): CountryDTO {
+        val result = countryDataSource.getCountryById(cca3)
+        return result.firstOrNull() ?: CountryDTO.emptyCountry()
+    }
+        //return countryDataSource.getCountryById(id)
+    }
