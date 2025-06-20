@@ -11,10 +11,19 @@ interface ICountryAPI {
         @Path("country") search: String,
         @Query("fields") fields: String = "cca3,name,region,flag"
     ): List<CountryDTO>
+
+
     @GET("all")
     suspend fun getAllCountries(
-        @Query("fields") fields: String = "name,region,capital,flag"
+        @Query("fields") fields: String = "cca3,name,region,capital,flag"
     ): List<CountryDTO>
+
+    @GET("region/{region}")
+    suspend fun getCountriesByRegion(
+        @Path("region") region: String,
+        @Query("fields") fields: String = "cca3,name,region,capital,flag,population,flags"
+    ): List<CountryDTO>
+
 
     @GET("alpha/{code}")
     suspend fun getCountryByCca3(

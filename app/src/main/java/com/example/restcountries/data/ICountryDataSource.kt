@@ -5,5 +5,6 @@ import com.example.restcountries.data.dto.CountryDTO
 interface ICountryDataSource {
      suspend fun getCountryList(search: String): List<CountryDTO>
      suspend fun getCountryByCca3(cca3: String): CountryDTO
-    //suspend fun getCountriesByRegion(region: String): List<Country>
+     suspend fun getCountriesByRegion(region: String): List<CountryDTO>
+     suspend fun getAllCountries(): List<CountryDTO>
 }

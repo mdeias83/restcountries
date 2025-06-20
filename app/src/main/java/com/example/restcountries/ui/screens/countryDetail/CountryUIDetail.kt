@@ -52,7 +52,7 @@ fun CountryUIDetail(
 
         Spacer(Modifier.height(24.dp))
 
-        // Tarjeta de datos
+        // Tarjeta de datosarg
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation()

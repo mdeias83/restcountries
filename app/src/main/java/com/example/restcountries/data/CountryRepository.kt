@@ -16,5 +16,14 @@ class CountryRepository(
         val result = countryDataSource.getCountryByCca3(cca3)
         return result
     }
-        //return countryDataSource.getCountryById(id)
+
+    override suspend fun fetchCountriesByRegion(region: String): List<CountryDTO>{
+        return countryDataSource.getCountriesByRegion(region)
     }
+
+    override suspend fun fetchAllCountries(): List<CountryDTO>{
+        return countryDataSource.getAllCountries()
+    }
+
+}
+

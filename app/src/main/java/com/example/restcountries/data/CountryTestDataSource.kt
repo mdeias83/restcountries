@@ -18,8 +18,24 @@ class CountryTestDataSource: ICountryDataSource  {
         return countryList
     }
 
+    override suspend fun getAllCountries() : List<CountryDTO>{
+
+        delay(5000)
+        val gson = Gson()
+        val countryList = gson.fromJson(json, Array<CountryDTO>::class.java).toList()
+        Log.d("GSONDATANAME", countryList[0].name.common)
+        return countryList
+    }
+
+
+
     override suspend fun getCountryByCca3(cca3: String): CountryDTO {
         return getCountryList("")[0]
+    }
+
+
+    override suspend fun getCountriesByRegion(region: String): List<CountryDTO> {
+        return getCountryList("")
     }
 
 
