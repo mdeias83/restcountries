@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.restcountries.ui.screens.commons.CountryUIItem
+import com.example.restcountries.ui.screens.countryDetail.CountryUIDetail
 
 @Composable
 fun CountryDetailScreen(
@@ -24,6 +25,6 @@ fun CountryDetailScreen(
         CircularProgressIndicator()
     }
     else {
-        CountryUIItem(vm.uiState.countryDetail, onClick = {cca3 -> {}})
+        CountryUIDetail(vm.uiState.countryDetail, onClick = {cca3 -> {}})
     }
 }
