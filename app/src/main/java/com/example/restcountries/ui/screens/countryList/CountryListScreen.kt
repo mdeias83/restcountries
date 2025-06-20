@@ -23,8 +23,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.restcountries.data.dto.CountryDTO
-import com.example.restcountries.data.dto.CountryDTO.Currency
-import com.example.restcountries.data.dto.CountryDTO.Name
+
+import com.example.restcountries.data.dto.Currency
+import com.example.restcountries.data.dto.Name
 import com.example.restcountries.ui.screens.Screens
 import com.example.restcountries.ui.theme.RestCountriesTheme
 

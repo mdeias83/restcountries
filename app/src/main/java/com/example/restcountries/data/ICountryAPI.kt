@@ -17,8 +17,8 @@ interface ICountryAPI {
     ): List<CountryDTO>
 
     @GET("alpha/{code}")
-    suspend fun getCountry(
+    suspend fun getCountryByCca3(
         @Path("code") cca3: String,
         @Query("fields") fields: String = "cca3,name,region,capital,flag,population"
-    ): List<CountryDTO>
+    ): CountryDTO
 }

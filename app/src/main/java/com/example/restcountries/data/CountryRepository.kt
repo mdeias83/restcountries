@@ -1,6 +1,7 @@
 package com.example.restcountries.data
 
 import com.example.restcountries.data.dto.CountryDTO
+import com.example.restcountries.data.dto.emptyCountry
 import com.example.restcountries.domain.ICountryRepository
 //ACA ELIJO SI QUIERO USAR EL TEST DATASOURCE O EL API DATASOURCE
 class CountryRepository(
@@ -12,8 +13,8 @@ class CountryRepository(
     }
 
     override suspend fun fetchCountry(cca3: String): CountryDTO {
-        val result = countryDataSource.getCountryById(cca3)
-        return result.firstOrNull() ?: CountryDTO.emptyCountry()
+        val result = countryDataSource.getCountryByCca3(cca3)
+        return result
     }
         //return countryDataSource.getCountryById(id)
     }

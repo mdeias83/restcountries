@@ -25,7 +25,7 @@ class CountryDetailScreenViewModel(
         }
     }
     fun setCountryId (cca3 : String): Unit {
-        uiState.copy(cca3 =  cca3, countryDetail = uiState.countryDetail)
+        uiState=uiState.copy(cca3 =  cca3, countryDetail = uiState.countryDetail)
         fetchCountry()
     }
 }

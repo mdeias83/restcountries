@@ -12,19 +12,7 @@ data class CountryDTO(
     val languages: Map<String, String>?,
     val flag: String,
     val population: Long
-) {
-    companion object {
-        fun emptyCountry(): CountryDTO = CountryDTO(
-            cca3 = "",
-            name = Name("", ""),
-            currencies = emptyMap(),
-            capital = emptyList(),
-            region = "",
-            languages = emptyMap(),
-            flag = "",
-            population = 0L
-        )
-    }
+)
 
     data class Name(
         val common: String,
@@ -35,5 +23,15 @@ data class CountryDTO(
         val name: String,
         val symbol: String
     )
-
+fun emptyCountry(): CountryDTO {
+    return CountryDTO(
+    cca3 = "",
+    name = Name("", ""),
+    currencies = emptyMap(),
+    capital = emptyList(),
+    region = "",
+    languages = emptyMap(),
+    flag = "",
+    population = 0L
+    )
 }

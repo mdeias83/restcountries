@@ -22,9 +22,9 @@ fun NavigationStack(){
         composable (route = Screens.CountryList.route){
             CountryListScreen(navController = navController)
         }
-        composable(route = Screens.CountryDetail.route + "/{cca3}") { backStackEntry ->
-            val cca3 = backStackEntry.arguments?.getString("cca3") ?: ""
-            CountryDetailScreen(cca3 = cca3)
+        composable(route = Screens.CountryDetail.route + "/{cca3}") { it ->
+            val cca3 = it.arguments?.getString("cca3") ?: ""
+            CountryDetailScreen(cca3)
         }
     }
 }

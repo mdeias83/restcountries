@@ -18,8 +18,8 @@ class CountryTestDataSource: ICountryDataSource  {
         return countryList
     }
 
-    override suspend fun getCountryById(cca3: String): List<CountryDTO> {
-        return getCountryList("")
+    override suspend fun getCountryByCca3(cca3: String): CountryDTO {
+        return getCountryList("")[0]
     }
 
 

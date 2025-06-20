@@ -2,6 +2,7 @@ package com.example.restcountries.data
 
 import android.util.Log
 import com.example.restcountries.data.dto.CountryDTO
+import com.example.restcountries.data.dto.emptyCountry
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -29,7 +30,9 @@ class CountryApiDataSource : ICountryDataSource {
         }
     }
 
-    override suspend fun getCountryById(cca3: String): List<CountryDTO> {
-        return RetrofitInstance.countryApi.getCountry(cca3)
+    override suspend fun getCountryByCca3(cca3: String): CountryDTO {
+        Log.d("DEBUG", "Llamando a getCountryByCca3 con cca3=$cca3")
+        val result =RetrofitInstance.countryApi.getCountryByCca3(cca3)
+        return return result
     }
 }
