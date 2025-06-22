@@ -33,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.restcountries.data.dto.CountryDTO
 
 import com.example.restcountries.data.dto.Currency
+import com.example.restcountries.data.dto.Flags
 import com.example.restcountries.data.dto.Name
 import com.example.restcountries.ui.screens.Screens
 import com.example.restcountries.ui.theme.RestCountriesTheme
@@ -80,12 +81,12 @@ fun CountryListScreen(
 
         Box {
             OutlinedButton(onClick = { expanded = true }) {
-                Text("Región: ${selectedRegion.replaceFirstChar { it.uppercase() }}")
+            Text("Región: ${selectedRegion.replaceFirstChar { it.uppercase() }}")
             }
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
-            ) {
+                ) {
                 regions.forEach { region ->
                     DropdownMenuItem(
                         text = { Text(region.replaceFirstChar { it.uppercase() }) },
@@ -138,13 +139,15 @@ fun CountryListScreenPreview() {
     val paisesDePrueba = listOf(
         CountryDTO(
             cca3 = "ARG",
+            cca2 = "AR",
             name = Name(common = "Argentina", official = "República Argentina"),
             currencies = mapOf("ARS" to Currency(name = "Peso argentino", symbol = "$")),
             capital = listOf("Buenos Aires"),
             region = "América del Sur",
             languages = mapOf("spa" to "Español"),
             flag = "🇦🇷",
-            population = 45808747
+            population = 45808747,
+            flags = Flags("","","")
         )
     )
     Column(

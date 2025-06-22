@@ -23,6 +23,9 @@ class CountryListScreenViewModel(
 
     private var fetchJob: Job? = null
 
+    init {
+        onRegionSelected("all")
+    }
     fun fetchCountries() {
         //De aca llamamos a la capa de datos
         fetchJob?.cancel()

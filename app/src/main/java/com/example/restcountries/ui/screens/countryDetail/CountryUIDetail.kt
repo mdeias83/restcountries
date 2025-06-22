@@ -41,13 +41,13 @@ fun CountryUIDetail(
 
         Spacer(Modifier.height(12.dp))
 
-        // Bandera
         AsyncImage(
-            model = country.flag, // Creamos una ext o lo mapeás vos
+            model = country.flags?.png
+                ?: "https://flagcdn.com/w320/${country.cca2.lowercase()}.png",
             contentDescription = "Bandera de ${country.name.common}",
             modifier = Modifier
-                .height(120.dp)
                 .fillMaxWidth()
+                .height(120.dp)
         )
 
         Spacer(Modifier.height(24.dp))
@@ -58,22 +58,24 @@ fun CountryUIDetail(
             elevation = CardDefaults.cardElevation()
         ) {
             Column(Modifier.padding(16.dp)) {
-                Text("Bandera de ${country.name.common}:   ${country.flag}")
+                //Text("Bandera de ${country.name.common}:   ${country.flag}")
                 Text("Nombre oficial: ${country.name.official}")
                 Text("Capital: ${country.capital?.firstOrNull() ?: "-"}")
                 Text("Población: ${country.population}")
                 Text("Región: ${country.region}")
-                Text("Idiomas: ${country.languages?.values?.joinToString() ?: "-"}")
-                Text("Moneda: ${country.currencies?.values?.firstOrNull()?.name ?: "-"} (${country.currencies?.values?.firstOrNull()?.symbol ?: ""})")
+                val languages = country.languages?.values?.joinToString(", ") ?: "-"
+                Text("Idiomas: $languages")
+                val currencies = country.currencies?.values?.joinToString(", ") { "${it.name} (${it.symbol})" } ?: "-"
+                Text("Moneda(s): $currencies")
             }
-        }
 
-       /* // Favoritos
+            /* // Favoritos
         IconButton(
             onClick = onFavoriteClick,
             modifier = Modifier.align(Alignment.End)
         ) {
             Icon(Icons.Default.FavoriteBorder, contentDescription = "Agregar a Favoritos")
         }*/
+        }
     }
 }
