@@ -44,12 +44,31 @@ fun CountryListScreen(
     vm: CountryListScreenViewModel = viewModel(),
     navController: NavHostController
 ) {
+    val userName = vm.userName // <-- Esto debe estar en tu VM, ejemplo: var userName: String by mutableStateOf("")
     val regions = listOf("all", "Africa", "Americas", "Asia", "Europe", "Oceania")
     var expanded by remember { mutableStateOf(false) }
     var selectedRegion by remember { mutableStateOf(regions.first()) }
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
+        // Encabezado: Bienvenida y botón de Logout
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Hola, ${vm.uiState.userName}",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f)
+            )
+            Button(onClick = { vm.logout() }) {
+                Text("Logout")
+            }
+        }
+
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         Text(
             text = "Lista de Países",
             style = MaterialTheme.typography.titleLarge,

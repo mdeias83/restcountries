@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.restcountries.data.CountryRepository
 import com.example.restcountries.domain.ICountryRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -17,6 +18,7 @@ class CountryListScreenViewModel(
 ) : ViewModel() {
     //val repo = CountryRepository(CountryTestDataSource())
     var uiState by mutableStateOf(CountryListScreenState())
+    var userName by mutableStateOf("Usuario") // Poné el nombre del usuario aquí
         private set
 
 
@@ -24,6 +26,11 @@ class CountryListScreenViewModel(
     private var fetchJob: Job? = null
 
     init {
+        //User init
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val name = currentUser?.displayName ?: currentUser?.email ?: "Invitado"
+        uiState = uiState.copy(userName = name)
+        //init de lista
         onRegionSelected("all")
     }
     fun fetchCountries() {
@@ -61,6 +68,12 @@ class CountryListScreenViewModel(
                 uiState = uiState.copy(countryList = emptyList())
             }
         }
+    }
+
+
+    fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        // Acá podés navegar a Login si querés
     }
 
 }
