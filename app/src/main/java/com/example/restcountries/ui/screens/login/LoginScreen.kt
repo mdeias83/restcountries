@@ -1,16 +1,10 @@
-package com.example.restcountries.ui.screens.splash
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,22 +16,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import kotlinx.coroutines.delay
-import com.example.restcountries.ui.screens.Screens
 
 @Composable
-fun SplashScreen(
+fun LoginScreen(
+    onGoogleLoginClick: () -> Unit,
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
-    // Navegar luego de 2.5s
-    LaunchedEffect(Unit) {
-        delay(2500)
-        navController.navigate(Screens.Login.route) {
-            popUpTo("splash") { inclusive = true }  //EVITA VOLVER ATRAS, SOLO EN EL SPLASH
-        }
-    }
-
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -71,6 +56,31 @@ fun SplashScreen(
                     .size(150.dp)
                     .clip(CircleShape)
             )
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Botón de Google
+            Button(
+                onClick = onGoogleLoginClick,
+                shape = RoundedCornerShape(24.dp),
+                elevation = ButtonDefaults.buttonElevation(8.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White)
+            ) {
+                // Icono de Google (opcional)
+                /*Icon(
+                    painter = painterResource(id = R.drawable.ic_google),
+                    contentDescription = "Google Icon",
+                    tint = Color.Unspecified
+                )*/
+                Text(
+                    text = "Login con Google",
+                    color = Color.Black,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                )
+            }
         }
+
     }
+
 }
+

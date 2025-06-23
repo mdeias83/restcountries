@@ -1,17 +1,23 @@
 package com.example.restcountries.ui.screens
 
+import LoginScreen
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.restcountries.ui.screens.countryDetail.CountryDetailScreen
 import com.example.restcountries.ui.screens.countryList.CountryListScreen
+//import com.example.restcountries.ui.screens.login.LoginScreen
 import com.example.restcountries.ui.screens.splash.SplashScreen
 
 @Composable
-fun NavigationStack(){
-    val navController = rememberNavController()
-
+fun NavigationStack(
+    onGoogleLoginClick: () -> Unit,
+    navController: NavHostController
+)
+{
     NavHost(
         navController = navController,
         startDestination = Screens.Splash.route
@@ -19,6 +25,14 @@ fun NavigationStack(){
         composable (route = Screens.Splash.route){
             SplashScreen(navController = navController)
         }
+        composable (route = Screens.Login.route){
+            LoginScreen(
+                onGoogleLoginClick,
+                navController = navController
+
+            )
+        }
+
         composable (route = Screens.CountryList.route){
             CountryListScreen(navController = navController)
         }

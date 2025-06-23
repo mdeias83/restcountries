@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RestCountries</string>
+    <string name="default_web_client_id">951875671344-rt53ikovqp88h7ttmat2njkoo52gatg1.apps.googleusercontent.com</string>
 </resources>
