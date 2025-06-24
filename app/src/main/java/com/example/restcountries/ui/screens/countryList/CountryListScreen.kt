@@ -1,7 +1,5 @@
 package com.example.restcountries.ui.screens.countryList
 
-import CountryUIList
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -18,6 +17,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,27 +27,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.restcountries.data.dto.CountryDTO
 
 import com.example.restcountries.data.dto.Currency
 import com.example.restcountries.data.dto.Flags
 import com.example.restcountries.data.dto.Name
 import com.example.restcountries.ui.screens.Screens
+import com.example.restcountries.ui.screens.commons.CountryUIList
 import com.example.restcountries.ui.theme.RestCountriesTheme
 
 @Composable
 fun CountryListScreen(
     modifier: Modifier = Modifier,
     vm: CountryListScreenViewModel = viewModel(),
-    navController: NavHostController
+    navController: NavHostController,
+    onLogOutClick: () -> Unit,
+
 ) {
-    val userName = vm.userName // <-- Esto debe estar en tu VM, ejemplo: var userName: String by mutableStateOf("")
     val regions = listOf("all", "Africa", "Americas", "Asia", "Europe", "Oceania")
     var expanded by remember { mutableStateOf(false) }
-    var selectedRegion by remember { mutableStateOf(regions.first()) }
+    var selectedRegion = vm.uiState.selectedRegion
+    val favoritos by vm.favoritos.collectAsState()
+
+
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
@@ -61,13 +64,17 @@ fun CountryListScreen(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f)
             )
-            Button(onClick = { vm.logout() }) {
+            // Botón de Favoritos
+            Button(onClick = { navController.navigate(Screens.BookMarks.route) }) {
+                Text("Favoritos")
+            }
+            Button(onClick =  onLogOutClick ) {
                 Text("Logout")
             }
         }
 
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(25.dp))
 
         Text(
             text = "Lista de Países",
@@ -98,13 +105,14 @@ fun CountryListScreen(
         }
         Spacer(modifier = Modifier.height(12.dp))
 
-        Box {
-            OutlinedButton(onClick = { expanded = true }) {
-            Text("Región: ${selectedRegion.replaceFirstChar { it.uppercase() }}")
+        Box{
+            OutlinedButton(onClick = { expanded = true }, modifier = Modifier.width(250.dp)) {
+            Text("Seleccionar Region: ${selectedRegion.replaceFirstChar { it.uppercase() }}")
             }
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
+                modifier = Modifier.width(250.dp)
                 ) {
                 regions.forEach { region ->
                     DropdownMenuItem(
@@ -122,11 +130,15 @@ fun CountryListScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        CountryUIList(vm.uiState.countryList, Modifier.fillMaxSize(), onClick = {
-                cca3 ->
-            Log.d("DEBUG", "Navegando a detalle con cca3: $cca3")
-            navController.navigate(Screens.CountryDetail.route + "/$cca3")
-        })
+
+        CountryUIList(
+            countryList = vm.uiState.countryList,
+            favoritos = favoritos,
+            onClick = { cca3,isBookmarked ->
+                navController.navigate(Screens.CountryDetail.createRoute(cca3,isBookmarked))
+            },
+            onBookmarkClick = { cca3 -> vm.toggleBookmark(cca3) }
+        )
     }
 }
 
@@ -177,6 +189,10 @@ fun CountryListScreenPreview() {
             style = MaterialTheme.typography.titleLarge
         )
         Spacer(modifier = Modifier.height(12.dp))
-        CountryUIList(paisesDePrueba, Modifier.fillMaxSize(), onClick = {})
+        CountryUIList(
+            paisesDePrueba, Modifier.fillMaxSize() as List<String>, onClick = {} as (String, Boolean) -> Unit,
+            onBookmarkClick = TODO(),
+            modifier = TODO()
+        )
     }
 }

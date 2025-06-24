@@ -67,8 +67,16 @@ class MainActivity : ComponentActivity() {
                     NavigationStack(onGoogleLoginClick = {
                         launcher.launch(googleSignClient.signInIntent)
 
-                    },navController
-
+                    },
+                        navController,
+                        onLogOutClick = {
+                            FirebaseAuth.getInstance().signOut()
+                            navController.navigate(Screens.Login.route){
+                                popUpTo(Screens.CountryList.route){
+                                    inclusive= true
+                                }
+                            }
+                        }
                     )
                 }
             }

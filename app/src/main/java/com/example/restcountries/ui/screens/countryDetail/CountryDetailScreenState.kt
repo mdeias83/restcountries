@@ -5,8 +5,12 @@ import com.example.restcountries.data.dto.emptyCountry
 
 data class CountryDetailScreenState(
     val cca3 : String="",
-    val countryDetail: CountryDTO = emptyCountry()
-    //val country
-) {//FALTA IMPLEMENTAR  COUNTRLISTDTO PARA CHUPAR EL CCA3
+    val countryDetail: CountryDTO = emptyCountry(),
+    val isLoading: Boolean = true,
+    val error: String? = null,
+    val isBookmarked : Boolean=false,
+    val userName: String = "",
+
+    ) {
 
 }

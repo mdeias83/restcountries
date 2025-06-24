@@ -4,9 +4,12 @@ import LoginScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.restcountries.ui.screens.bookmarks.BookMarksScreen
 import com.example.restcountries.ui.screens.countryDetail.CountryDetailScreen
 import com.example.restcountries.ui.screens.countryList.CountryListScreen
 //import com.example.restcountries.ui.screens.login.LoginScreen
@@ -15,7 +18,8 @@ import com.example.restcountries.ui.screens.splash.SplashScreen
 @Composable
 fun NavigationStack(
     onGoogleLoginClick: () -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    onLogOutClick: () -> Unit
 )
 {
     NavHost(
@@ -25,6 +29,7 @@ fun NavigationStack(
         composable (route = Screens.Splash.route){
             SplashScreen(navController = navController)
         }
+
         composable (route = Screens.Login.route){
             LoginScreen(
                 onGoogleLoginClick,
@@ -34,11 +39,24 @@ fun NavigationStack(
         }
 
         composable (route = Screens.CountryList.route){
-            CountryListScreen(navController = navController)
+            CountryListScreen(navController = navController, onLogOutClick = onLogOutClick)
         }
-        composable(route = Screens.CountryDetail.route + "/{cca3}") { it ->
-            val cca3 = it.arguments?.getString("cca3") ?: ""
-            CountryDetailScreen(cca3)
+
+        composable(
+            route = "country_detail_screen/{cca3}/{isBookmarked}",
+            arguments = listOf(
+                navArgument("cca3") { type = NavType.StringType },
+                navArgument("isBookmarked") { type = NavType.BoolType }
+            )
+        ) { backStackEntry ->
+            val cca3 = backStackEntry.arguments?.getString("cca3") ?: ""
+            val isBookmarked = backStackEntry.arguments?.getBoolean("isBookmarked") ?: false
+
+            CountryDetailScreen(cca3 = cca3,initialBookmarked = isBookmarked)
+
+        }
+        composable(Screens.BookMarks.route) {
+            BookMarksScreen(navController = navController)
         }
     }
 }

@@ -4,8 +4,8 @@ import com.example.restcountries.data.dto.CountryDTO
 
 data class CountryListScreenState (
     val countryList: List<CountryDTO> = emptyList(),
-    val selectedRegion: String = "all",
+    val selectedRegion: String = "",
     val searchQuery: String="",
-    val userName: String = "" //
+    val userName: String = "",
 ) {
 }
