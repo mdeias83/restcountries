@@ -8,7 +8,6 @@ data class CountryDetailScreenState(
     val countryDetail: CountryDTO = emptyCountry(),
     val isLoading: Boolean = true,
     val error: String? = null,
-    val isBookmarked : Boolean=false,
     val userName: String = "",
 
     ) {

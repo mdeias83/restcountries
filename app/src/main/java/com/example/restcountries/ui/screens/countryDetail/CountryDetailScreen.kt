@@ -9,12 +9,14 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.restcountries.ui.screens.Screens
+import androidx.compose.runtime.getValue
 
 @Composable
 fun CountryDetailScreen(
@@ -29,6 +31,8 @@ fun CountryDetailScreen(
     }
 
     val userName = vm.uiState.userName
+    val favoritos by vm.favoritos.collectAsState()
+    val isBookmarked = favoritos.contains(cca3)
 
     Column(modifier = Modifier.fillMaxSize()) {
 
@@ -81,7 +85,7 @@ fun CountryDetailScreen(
         } else {
             CountryUIDetail(
                 country = vm.uiState.countryDetail,
-                isBookmarked = vm.uiState.isBookmarked,
+                isBookmarked = isBookmarked, // ⬅️ valor calculado
                 onFavoriteClick = {
                     vm.toggleBookmark(cca3)
                 }

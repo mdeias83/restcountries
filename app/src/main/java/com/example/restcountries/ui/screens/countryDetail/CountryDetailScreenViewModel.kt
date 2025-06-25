@@ -23,7 +23,7 @@ class CountryDetailScreenViewModel(
     private val db = Firebase.firestore
     private val auth = FirebaseAuth.getInstance()
     private val _favoritos = MutableStateFlow<List<String>>(emptyList())
-    //val favoritos: StateFlow<List<String>> = _favoritos
+    val favoritos: StateFlow<List<String>> = _favoritos
 
     var uiState by mutableStateOf(CountryDetailScreenState())
         private set
@@ -73,8 +73,11 @@ class CountryDetailScreenViewModel(
         val isFav = _favoritos.value.contains(cca3)
         val update = if (isFav) {
             mapOf("countries" to com.google.firebase.firestore.FieldValue.arrayRemove(cca3))
+            //uiState= uiState.copy(cca3 = cca3, countryDetail = uiState.countryDetail)
         } else {
             mapOf("countries" to com.google.firebase.firestore.FieldValue.arrayUnion(cca3))
+            //uiState= uiState.copy(cca3 = cca3, countryDetail = uiState.countryDetail)
+
         }
         docRef.set(update, com.google.firebase.firestore.SetOptions.merge())
     }
