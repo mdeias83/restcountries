@@ -19,10 +19,11 @@ import kotlinx.coroutines.launch
 class CountryDetailScreenViewModel(
     private val countryRepository: ICountryRepository = CountryRepository()
 ) : ViewModel() {
+
     private val db = Firebase.firestore
     private val auth = FirebaseAuth.getInstance()
     private val _favoritos = MutableStateFlow<List<String>>(emptyList())
-    val favoritos: StateFlow<List<String>> = _favoritos
+    //val favoritos: StateFlow<List<String>> = _favoritos
 
     var uiState by mutableStateOf(CountryDetailScreenState())
         private set
@@ -32,7 +33,6 @@ class CountryDetailScreenViewModel(
     init {
         getUserName() //User init
         listenFavorites()
-
 
     }
 
@@ -65,6 +65,7 @@ class CountryDetailScreenViewModel(
         fetchCountry()
     }
 
+
     fun toggleBookmark(cca3: String) {
         val uid = auth.currentUser?.uid ?: return
         val docRef = db.collection("users").document(uid).collection("favorites").document("list")
@@ -83,47 +84,4 @@ class CountryDetailScreenViewModel(
         uiState = uiState.copy(userName =  FirebaseAuth.getInstance().currentUser?.displayName?: "Usuario Desconocido")
     }
 
-    /*
-        fun checkIfBookmarked(cca3: String) {
-            userId ?: return
-            firestore.collection("bookmarks")
-                .document(userId)
-                .collection("countries")
-                .document(cca3)
-                .get()
-                .addOnSuccessListener { document ->
-                    uiState = uiState.copy(isBookmarked = document.exists())
-                }
-        }
-
-        fun addBookmark(cca3: String) {
-            userId ?: return
-
-            // Solo se guarda el ID del país, podés agregar más si querés
-            val bookmarkData = mapOf(
-                "timestamp" to System.currentTimeMillis()
-            )
-
-            firestore.collection("bookmarks")
-                .document(userId)
-                .collection("countries")
-                .document(cca3)
-                .set(bookmarkData)
-                .addOnSuccessListener {
-                    uiState = uiState.copy(isBookmarked = true)
-                }
-        }
-
-        fun removeBookmark(cca3: String) {
-            userId ?: return
-
-            firestore.collection("bookmarks")
-                .document(userId)
-                .collection("countries")
-                .document(cca3)
-                .delete()
-                .addOnSuccessListener {
-                    uiState = uiState.copy(isBookmarked = false)
-                }
-        }*/
-}
+ }

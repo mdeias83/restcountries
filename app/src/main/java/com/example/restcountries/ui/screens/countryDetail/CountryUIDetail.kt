@@ -81,7 +81,9 @@ fun CountryUIDetail(
                 ) {
                     Icon(
                         imageVector = if (isBookmarked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = if (isBookmarked) "Quitar de favoritos" else "Agregar a favoritos"
+                        contentDescription = if (isBookmarked) "Quitar de favoritos" else "Agregar a favoritos",
+                        tint = if (isBookmarked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+
                     )
                 }
             }

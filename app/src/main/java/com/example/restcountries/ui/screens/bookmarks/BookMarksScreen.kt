@@ -2,8 +2,12 @@ package com.example.restcountries.ui.screens.bookmarks
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -14,8 +18,62 @@ import com.example.restcountries.ui.screens.commons.CountryUIList
 @Composable
 fun BookMarksScreen(
     navController: NavController,
-    vm: BookmarksScreenViewModel = viewModel()
+    vm: BookmarksScreenViewModel = viewModel(),
+    onLogOutClick: () -> Unit
 ) {
     val favoritos by vm.favoritos.collectAsState()
-    Log.d("BookMarks","${favoritos.toString()}")
+    val userName = vm.uiState.userName
+    val countries = vm.uiState.countryList
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+
+        // 👉 Encabezado con saludo y botones
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Hola, $userName",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f)
+            )
+
+            IconButton(onClick = {
+                navController.navigate(Screens.CountryList.route) {
+                    popUpTo(Screens.CountryList.route) { inclusive = true }
+                }
+            }) {
+                Icon(Icons.Default.Home, contentDescription = "Volver a lista")
+            }
+
+            IconButton(onClick = onLogOutClick) {
+                Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar sesión")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Países Favoritos",
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // ⭐ Lista de favoritos
+        CountryUIList(
+            countryList = countries,
+            favoritos = favoritos,
+            onClick = { cca3, isBookmarked ->
+                navController.navigate(Screens.CountryDetail.createRoute(cca3, isBookmarked))
+            },
+            onBookmarkClick = { cca3 ->
+                vm.toggleBookmark(cca3)
+            }
+        )
+    }
 }

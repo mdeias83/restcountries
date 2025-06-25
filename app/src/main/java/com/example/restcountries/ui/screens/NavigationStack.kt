@@ -43,7 +43,7 @@ fun NavigationStack(
         }
 
         composable(
-            route = "country_detail_screen/{cca3}/{isBookmarked}",
+            route = Screens.CountryDetail.route,
             arguments = listOf(
                 navArgument("cca3") { type = NavType.StringType },
                 navArgument("isBookmarked") { type = NavType.BoolType }
@@ -52,11 +52,19 @@ fun NavigationStack(
             val cca3 = backStackEntry.arguments?.getString("cca3") ?: ""
             val isBookmarked = backStackEntry.arguments?.getBoolean("isBookmarked") ?: false
 
-            CountryDetailScreen(cca3 = cca3,initialBookmarked = isBookmarked)
-
+            CountryDetailScreen(
+                cca3 = cca3,
+                initialBookmarked = isBookmarked,
+                navController = navController,
+                onLogoutClick = onLogOutClick
+            )
         }
         composable(Screens.BookMarks.route) {
-            BookMarksScreen(navController = navController)
+            BookMarksScreen(
+                navController = navController,
+                onLogOutClick = onLogOutClick
+            )
         }
+
     }
 }

@@ -9,9 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -54,7 +60,6 @@ fun CountryListScreen(
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
-        // Encabezado: Bienvenida y botón de Logout
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -64,12 +69,23 @@ fun CountryListScreen(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f)
             )
-            // Botón de Favoritos
-            Button(onClick = { navController.navigate(Screens.BookMarks.route) }) {
-                Text("Favoritos")
+
+            IconButton(
+                onClick = { navController.navigate(Screens.BookMarks.route) }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favoritos"
+                )
             }
-            Button(onClick =  onLogOutClick ) {
-                Text("Logout")
+
+            IconButton(
+                onClick = onLogOutClick
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ExitToApp,
+                    contentDescription = "Cerrar sesión"
+                )
             }
         }
 

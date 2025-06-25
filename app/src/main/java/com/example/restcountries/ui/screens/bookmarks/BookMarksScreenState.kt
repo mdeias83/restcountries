@@ -4,7 +4,8 @@ import com.example.restcountries.data.dto.CountryDTO
 
 
 data class BookmarksState(
-    val bookmarks: List<CountryDTO> = emptyList(),
+    val countryList: List<CountryDTO> = emptyList(),
+    val favoritos: List<CountryDTO> = emptyList(),
     val userName: String = "",
     val isLoading: Boolean = false,
     val error: String? = null

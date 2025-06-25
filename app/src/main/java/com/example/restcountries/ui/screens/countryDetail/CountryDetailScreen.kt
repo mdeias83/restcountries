@@ -1,39 +1,87 @@
 package com.example.restcountries.ui.screens.countryDetail
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.restcountries.ui.screens.commons.CountryUIItem
-import com.example.restcountries.ui.screens.countryDetail.CountryUIDetail
+import androidx.navigation.NavHostController
+import com.example.restcountries.ui.screens.Screens
 
 @Composable
 fun CountryDetailScreen(
     cca3: String,
-    modifier: Modifier = Modifier,
+    initialBookmarked: Boolean,
+    navController: NavHostController,
+    onLogoutClick: () -> Unit,
     vm: CountryDetailScreenViewModel = viewModel(),
-    initialBookmarked: Boolean, // <-- este es el que mencionás
 ) {
     LaunchedEffect(Unit) {
         vm.setCountryId(cca3)
     }
 
-    if (vm.uiState.countryDetail.cca3 == "") {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+    val userName = vm.uiState.userName
+
+    Column(modifier = Modifier.fillMaxSize()) {
+
+        // 🌍 Encabezado
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            CircularProgressIndicator()
+            Text(
+                text = "Hola, $userName",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f)
+            )
+
+            // 🔙 Volver a lista
+            IconButton(onClick = {
+                navController.navigate(Screens.CountryList.route) {
+                    popUpTo(Screens.CountryList.route) { inclusive = true }
+                }
+            }) {
+                Icon(Icons.Default.Home, contentDescription = "Volver a lista")
+            }
+
+            // ❤️ Favoritos
+            IconButton(onClick = {
+                navController.navigate(Screens.BookMarks.route)
+            }) {
+                Icon(Icons.Default.Favorite, contentDescription = "Ir a favoritos")
+            }
+
+            // 🚪 Logout
+            IconButton(onClick = onLogoutClick) {
+                Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar sesión")
+            }
         }
-    } else {
-        CountryUIDetail(
-            country = vm.uiState.countryDetail,
-            isBookmarked = vm.uiState.isBookmarked,
-            onFavoriteClick = { vm.toggleBookmark(vm.uiState.cca3) }
-        )
+
+        // 🌐 Contenido principal
+        if (vm.uiState.countryDetail.cca3 == "") {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else {
+            CountryUIDetail(
+                country = vm.uiState.countryDetail,
+                isBookmarked = vm.uiState.isBookmarked,
+                onFavoriteClick = {
+                    vm.toggleBookmark(cca3)
+                }
+            )
+        }
     }
 }

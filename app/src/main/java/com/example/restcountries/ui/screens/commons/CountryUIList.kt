@@ -20,7 +20,6 @@ fun CountryUIList(
     favoritos: List<String> = emptyList(),
     onClick: (String, Boolean) -> Unit,
     onBookmarkClick: (String) -> Unit,
-
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
