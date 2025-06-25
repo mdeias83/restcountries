@@ -2,6 +2,7 @@ package com.example.restcountries.ui.screens.countryDetail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -62,7 +63,10 @@ fun CountryDetailScreen(
 
             // 🚪 Logout
             IconButton(onClick = onLogoutClick) {
-                Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar sesión")
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                    contentDescription = "Cerrar sesión"
+                )
             }
         }
 

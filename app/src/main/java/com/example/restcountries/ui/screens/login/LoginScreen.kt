@@ -21,6 +21,8 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.restcountries.ui.screens.login.LoginScreenViewModel
 import com.example.restcountries.ui.screens.Screens
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -31,11 +33,16 @@ fun LoginScreen(
     vm : LoginScreenViewModel = viewModel()
 ) {
     LaunchedEffect(Unit) {
-        vm.uiEvent.collect {
-            event ->
-                navController.navigate(Screens.CountryList.route){
-                    popUpTo(Screens.Login.route) { inclusive = true}
-                }
+        delay(2500)
+        val isLoggedIn = FirebaseAuth.getInstance().currentUser != null
+        if (isLoggedIn) {
+            navController.navigate(Screens.CountryList.route) {
+                popUpTo("splash") { inclusive = true }
+            }
+        } else {
+            navController.navigate(Screens.Login.route) {
+                popUpTo("splash") { inclusive = true }
+            }
         }
     }
     Box(
@@ -80,12 +87,7 @@ fun LoginScreen(
                 elevation = ButtonDefaults.buttonElevation(8.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White)
             ) {
-                // Icono de Google (opcional)
-                /*Icon(
-                    painter = painterResource(id = R.drawable.ic_google),
-                    contentDescription = "Google Icon",
-                    tint = Color.Unspecified
-                )*/
+
                 Text(
                     text = "Login con Google",
                     color = Color.Black,

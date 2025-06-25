@@ -1,45 +1,68 @@
 package com.example.restcountries.ui.screens
 
 import LoginScreen
+import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.restcountries.ui.screens.bookmarks.BookMarksScreen
 import com.example.restcountries.ui.screens.countryDetail.CountryDetailScreen
 import com.example.restcountries.ui.screens.countryList.CountryListScreen
-//import com.example.restcountries.ui.screens.login.LoginScreen
 import com.example.restcountries.ui.screens.splash.SplashScreen
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun NavigationStack(
     onGoogleLoginClick: () -> Unit,
     navController: NavHostController,
-    onLogOutClick: () -> Unit
-)
-{
+    onLogOutClick: () -> Unit // <- ESTE debe existir
+) {
+    val context = LocalContext.current
+
+    // ✅ Función centralizada de logout
+    fun logout(context: Context) {
+        // Cerrar sesión Firebase
+        FirebaseAuth.getInstance().signOut()
+
+        // Cerrar sesión Google Sign-In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+        val googleSignInClient = GoogleSignIn.getClient(context, gso)
+
+        googleSignInClient.signOut().addOnCompleteListener {
+            // Redirigir a Login y limpiar back stack
+            navController.navigate(Screens.Login.route) {
+                popUpTo(0)
+            }
+        }
+    }
+
+    // 👇 Navegación
     NavHost(
         navController = navController,
         startDestination = Screens.Splash.route
-    ){
-        composable (route = Screens.Splash.route){
+    ) {
+        composable(Screens.Splash.route) {
             SplashScreen(navController = navController)
         }
 
-        composable (route = Screens.Login.route){
+        composable(Screens.Login.route) {
             LoginScreen(
-                onGoogleLoginClick,
+                onGoogleLoginClick = onGoogleLoginClick,
                 navController = navController
-
             )
         }
 
-        composable (route = Screens.CountryList.route){
-            CountryListScreen(navController = navController, onLogOutClick = onLogOutClick)
+        composable(Screens.CountryList.route) {
+            CountryListScreen(
+                navController = navController,
+                onLogOutClick = { logout(context) }
+            )
         }
 
         composable(
@@ -56,15 +79,15 @@ fun NavigationStack(
                 cca3 = cca3,
                 initialBookmarked = isBookmarked,
                 navController = navController,
-                onLogoutClick = onLogOutClick
-            )
-        }
-        composable(Screens.BookMarks.route) {
-            BookMarksScreen(
-                navController = navController,
-                onLogOutClick = onLogOutClick
+                onLogoutClick = { logout(context) }
             )
         }
 
+        composable(Screens.BookMarks.route) {
+            BookMarksScreen(
+                navController = navController,
+                onLogOutClick = { logout(context) }
+            )
+        }
     }
 }

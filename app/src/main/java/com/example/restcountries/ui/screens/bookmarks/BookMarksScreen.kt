@@ -1,6 +1,5 @@
 package com.example.restcountries.ui.screens.bookmarks
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
@@ -31,7 +30,7 @@ fun BookMarksScreen(
             .padding(16.dp)
     ) {
 
-        // 👉 Encabezado con saludo y botones
+        // 🔝 Encabezado
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -42,16 +41,26 @@ fun BookMarksScreen(
                 modifier = Modifier.weight(1f)
             )
 
-            IconButton(onClick = {
-                navController.navigate(Screens.CountryList.route) {
-                    popUpTo(Screens.CountryList.route) { inclusive = true }
+            IconButton(
+                onClick = {
+                    navController.navigate(Screens.CountryList.route) {
+                        popUpTo(Screens.CountryList.route) { inclusive = true }
+                    }
                 }
-            }) {
-                Icon(Icons.Default.Home, contentDescription = "Volver a lista")
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = "Volver a lista"
+                )
             }
 
-            IconButton(onClick = onLogOutClick) {
-                Icon(Icons.Default.ExitToApp, contentDescription = "Cerrar sesión")
+            IconButton(
+                onClick = onLogOutClick
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ExitToApp,
+                    contentDescription = "Cerrar sesión"
+                )
             }
         }
 
@@ -64,7 +73,7 @@ fun BookMarksScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ⭐ Lista de favoritos
+        // ⭐ Lista de países favoritos
         CountryUIList(
             countryList = countries,
             favoritos = favoritos,

@@ -60,21 +60,19 @@ class MainActivity : ComponentActivity() {
             )
 
         setContent {
+            navController = rememberNavController()
 
-            navController= rememberNavController()
             RestCountriesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NavigationStack(onGoogleLoginClick = {
-                        launcher.launch(googleSignClient.signInIntent)
-
-                    },
-                        navController,
+                    NavigationStack(
+                        onGoogleLoginClick = {
+                            launcher.launch(googleSignClient.signInIntent)
+                        },
+                        navController = navController,
                         onLogOutClick = {
                             FirebaseAuth.getInstance().signOut()
-                            navController.navigate(Screens.Login.route){
-                                popUpTo(Screens.CountryList.route){
-                                    inclusive= true
-                                }
+                            navController.navigate(Screens.Login.route) {
+                                popUpTo(0)
                             }
                         }
                     )
