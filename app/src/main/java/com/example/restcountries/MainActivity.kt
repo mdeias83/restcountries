@@ -12,6 +12,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.restcountries.data.local.CountryDatabase
+import com.example.restcountries.data.local.CountryDatabaseProvider
 import com.example.restcountries.ui.screens.NavigationStack
 import com.example.restcountries.ui.screens.Screens
 import com.example.restcountries.ui.theme.RestCountriesTheme
@@ -51,6 +53,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        CountryDatabaseProvider.createDatabase(applicationContext)
         googleSignClient = GoogleSignIn.getClient(
             this,
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

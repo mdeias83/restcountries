@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.converter.gson)
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation(libs.retrofit)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.google.services)

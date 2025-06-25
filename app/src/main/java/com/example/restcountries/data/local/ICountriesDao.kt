@@ -1,10 +1,12 @@
 package com.example.restcountries.data.local
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-/*
+
+@Dao
 interface ICountriesDao {
     @Query("SELECT * FROM countries")
     suspend fun getAll(): List<CountryLocal>
@@ -16,4 +18,4 @@ interface ICountriesDao {
     @Delete
     suspend fun delete(country: CountryLocal)
 
-}*/
+}

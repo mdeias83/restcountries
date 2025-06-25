@@ -23,7 +23,7 @@ class CountryListScreenViewModel(
     private val db = Firebase.firestore
     private val auth = FirebaseAuth.getInstance()
 
-    // Lista reactiva de favoritos (por ejemplo, solo los cca3)
+    // Lista reactiva de favoritos
     private val _favoritos = MutableStateFlow<List<String>>(emptyList())
     val favoritos: StateFlow<List<String>> = _favoritos
 
@@ -38,7 +38,6 @@ class CountryListScreenViewModel(
     init {
         getUserName() //User init
         listenFavorites()
-
 
     }
 
@@ -111,9 +110,6 @@ class CountryListScreenViewModel(
     fun getUserName(){
         uiState = uiState.copy(searchQuery = uiState.searchQuery, countryList = uiState.countryList, userName =  FirebaseAuth.getInstance().currentUser?.displayName?: "Usuario Desconocido")
     }
-
-
-
 }
 
 
