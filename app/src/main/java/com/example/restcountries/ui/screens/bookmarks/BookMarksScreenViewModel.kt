@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -27,7 +28,7 @@ class BookmarksScreenViewModel : ViewModel() {
 
     // Lista reactiva de favoritos (por ejemplo, solo los cca3)
     private val _favoritos = MutableStateFlow<List<String>>(emptyList())
-    val favoritos: StateFlow<List<String>> = _favoritos
+    val favoritos = _favoritos.asStateFlow()
     var countries: List<CountryDTO> = emptyList()
 
     var uiState by mutableStateOf(BookmarksState())
@@ -76,19 +77,24 @@ class BookmarksScreenViewModel : ViewModel() {
 
     fun getFavoriteCountries() {
         viewModelScope.launch {
+            uiState = uiState.copy(isLoading = true)
             try {
                 val allCountries = countryRepository.fetchAllCountries()
                 val favoriteIds = _favoritos.value
-
                 val favoriteCountries = allCountries.filter { it.cca3 in favoriteIds }
-
-                uiState = uiState.copy(countryList = favoriteCountries)
-
+                uiState = uiState.copy(
+                    countryList = favoriteCountries,
+                    isLoading = false
+                )
             } catch (e: Exception) {
-                uiState = uiState.copy(countryList = emptyList())
+                uiState = uiState.copy(
+                    countryList = emptyList(),
+                    isLoading = false
+                )
             }
         }
     }
+
 
     fun toggleBookmark(cca3: String) {
         val uid = auth.currentUser?.uid ?: return

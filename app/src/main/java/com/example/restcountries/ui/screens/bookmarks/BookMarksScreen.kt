@@ -23,6 +23,10 @@ fun BookMarksScreen(
     val favoritos by vm.favoritos.collectAsState()
     val userName = vm.uiState.userName
     val countries = vm.uiState.countryList
+    val isLoading = vm.uiState.isLoading
+    LaunchedEffect(favoritos) {
+        vm.getFavoriteCountries()
+    }
 
     Column(
         modifier = Modifier
@@ -74,15 +78,26 @@ fun BookMarksScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         // ⭐ Lista de países favoritos
-        CountryUIList(
-            countryList = countries,
-            favoritos = favoritos,
-            onClick = { cca3, isBookmarked ->
-                navController.navigate(Screens.CountryDetail.createRoute(cca3, isBookmarked))
-            },
-            onBookmarkClick = { cca3 ->
-                vm.toggleBookmark(cca3)
+        if (isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
             }
-        )
+        } else {
+            CountryUIList(
+                countryList = countries,
+                favoritos = favoritos,
+                onClick = { cca3, isBookmarked ->
+                    navController.navigate(Screens.CountryDetail.createRoute(cca3, isBookmarked))
+                },
+                onBookmarkClick = { cca3 ->
+                    vm.toggleBookmark(cca3)
+                }
+            )
+        }
+
+
     }
 }
